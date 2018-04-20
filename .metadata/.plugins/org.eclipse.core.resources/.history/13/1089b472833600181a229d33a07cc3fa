@@ -1,0 +1,12 @@
+package thirteen;
+
+import java.util.Scanner;
+
+public class RotateByThirteen {
+
+	public static void main(String[] args) {
+		Scanner key = new Scanner(System.in);
+
+	}
+
+}

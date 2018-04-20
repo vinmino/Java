@@ -1,0 +1,58 @@
+package readableScramble;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class mixer {
+	
+	public static String wordScambler(String word) {
+		ArrayList<String> wordList = new ArrayList<String>();
+		ArrayList<String> wordDone = new ArrayList<String>();
+		ArrayList<Integer> indexArray = new ArrayList<Integer>();
+		int randomIndex = 0;
+		int randomNum = 0;
+		int cushion = 0;
+		
+		for (int i = word.length() - 1; word.charAt(i) < "A".charAt(0);i--) {
+			cushion++;
+		}
+		
+		for (int i = 1; i < word.length() - 1 - cushion; i++) {
+			wordList.add(word.substring(i, i + 1));
+			indexArray.add(i);
+		}
+		
+		wordDone = wordList;
+		
+		for (int i = 0; i < indexArray.size(); i++) {
+			randomNum = (int)(Math.random() * indexArray.size());
+			randomIndex = indexArray.get(randomNum);
+			wordDone.set(i, wordList.get(randomIndex));
+			indexArray.remove(randomIndex);
+		}
+		
+		word = "";
+		
+		for (int i = 0; i < wordDone.size(); i++) {
+			word += wordDone.get(i);
+		}
+		
+		
+		return word;
+	}
+
+	public static void main(String[] args) {
+		
+		Scanner key = new Scanner(System.in);
+		String user;
+		
+		System.out.print("Input a string of words to scramble the letters in: ");
+		user = key.nextLine();
+		
+		String result = wordScambler(user);		
+		
+		System.out.println(result);
+		
+	}
+
+}

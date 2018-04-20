@@ -1,0 +1,59 @@
+package thirteen;
+
+import java.util.Scanner;
+
+public class RotateByThirteen {
+	
+	public static boolean btw_AZ(char character) {
+		if (character >= 'A' && character <= 'Z') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean btw_az(char character) {
+		if (character >= 'a' && character <= 'z') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static String thirteen(String user) {
+		char curr;
+		int diff;
+		for (int i = 0; i < user.length(); i++) {
+			curr = user.charAt(i);
+			if (btw_AZ(curr) || btw_az(curr)) {
+				curr += 13;
+			}
+			if (btw_AZ(curr) || btw_az(curr)) {
+				user = user.replace(user.charAt(i), curr);
+				continue;
+			} else if (btw_AZ((char)(curr - 13))) {
+				diff = curr - 'Z';
+				curr = (char)('A' - 1 + diff);
+			} else if (btw_az((char)(curr - 13))) {
+				diff = curr - 'z';
+				curr = (char)('a' - 1 + diff);
+			}
+			user.replace(user.charAt(i), curr);
+		}
+		
+		return user;
+	}
+	
+	public static void main(String[] args) {
+		Scanner key = new Scanner(System.in);
+		System.out.print("Input the string of text: ");
+		String user = key.nextLine();
+		
+		String result = thirteen(user);
+		System.out.println(result);
+		
+		
+
+	}
+
+}

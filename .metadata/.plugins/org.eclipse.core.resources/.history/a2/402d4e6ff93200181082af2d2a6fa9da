@@ -1,0 +1,75 @@
+package readableScramble;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class mixer {
+	
+	public static String wordScambler(String word) {
+		ArrayList<String> wordList = new ArrayList<String>();
+		ArrayList<String> end  = new ArrayList<String>();
+		
+		
+		int cushion = 0;
+		
+		
+		for (int i = 0; i < word.length(); i++) {
+			if (i != word.length()) wordList.add(word.substring(i, i+1));
+			if (i == word.length()) wordList.add(word.substring(i));
+		}
+		
+		String first = wordList.get(0);
+		wordList.remove(0);
+		
+		for (int i = wordList.size() - 1; wordList.get(i).charAt(0) < "A".charAt(0); i-- ) {
+			cushion++;
+		}
+		for (int i = 0; i < cushion + 1; i++) {
+			end.add(wordList.get(wordList.size() - 1));
+			wordList.remove(wordList.size() - 1);
+		}
+		
+		
+		/*
+		String first = word.substring(0, 1);
+		for (int i = word.length() - 1; word.charAt(i) < "A".charAt(0);i--) {
+			cushion++;
+		}
+		for (int i = 0; i < cushion; i++) {
+			end.add(word.substring(word.length() - cushion - 1));
+		}
+		for (int i = 1; i < word.length() - 1 - cushion; i++) {
+			wordList.add(word.substring(i, i + 1));
+		}
+		*/
+		
+		
+		Collections.shuffle(wordList);
+		
+		word = "";
+		word += first;
+		for (int i = 0; i < wordList.size(); i++) {
+			word += wordList.get(i);
+		}
+		for (int i = 0; i < end.size(); i++) {
+			word += end.get(end.size() - 1 - i);
+		}
+		return word;
+	}
+
+	public static void main(String[] args) {
+		
+		Scanner key = new Scanner(System.in);
+		String user;
+		
+		System.out.print("Input a string of words to scramble the letters in: ");
+		user = key.nextLine();
+		
+		String result = wordScambler(user);		
+		
+		System.out.println(result);
+		
+	}
+
+}

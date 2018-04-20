@@ -1,0 +1,16 @@
+package zone;
+
+import java.util.ArrayList;
+
+public class testingZoneRUN {
+  /** Main method */
+  public static void main(String[] args) {
+	  
+	  
+	  double[] mylist = new double[10];
+	  
+	  System.out.println(mylist.length);
+	  
+	  
+    }
+}

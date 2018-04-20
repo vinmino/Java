@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/2D Graphics/2D Graphics.iml" filepath="$PROJECT_DIR$/2D Graphics/2D Graphics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Array Fun/Array Fun.iml" filepath="$PROJECT_DIR$/Array Fun/Array Fun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CHOO CHOO/CHOO CHOO.iml" filepath="$PROJECT_DIR$/CHOO CHOO/CHOO CHOO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/City Alphabetized/City Alphabetized.iml" filepath="$PROJECT_DIR$/City Alphabetized/City Alphabetized.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DancingAngels/DancingAngels.iml" filepath="$PROJECT_DIR$/DancingAngels/DancingAngels.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Deck of Cards/Deck of Cards.iml" filepath="$PROJECT_DIR$/Deck of Cards/Deck of Cards.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FooCorporation/FooCorporation.iml" filepath="$PROJECT_DIR$/FooCorporation/FooCorporation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FooCorporations/FooCorporations.iml" filepath="$PROJECT_DIR$/FooCorporations/FooCorporations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Generate100s/Generate100s.iml" filepath="$PROJECT_DIR$/Generate100s/Generate100s.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Goompa/Goompa.iml" filepath="$PROJECT_DIR$/Goompa/Goompa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Graphics Tutorials/Graphics Tutorials.iml" filepath="$PROJECT_DIR$/Graphics Tutorials/Graphics Tutorials.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GravityCalculator/GravityCalculator.iml" filepath="$PROJECT_DIR$/GravityCalculator/GravityCalculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Greatest Common Divisor/Greatest Common Divisor.iml" filepath="$PROJECT_DIR$/Greatest Common Divisor/Greatest Common Divisor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HelloWorld/HelloWorld.iml" filepath="$PROJECT_DIR$/HelloWorld/HelloWorld.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Hex to Decimal Converter/Hex to Decimal Converter.iml" filepath="$PROJECT_DIR$/Hex to Decimal Converter/Hex to Decimal Converter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HexToDecimalBetter/HexToDecimalBetter.iml" filepath="$PROJECT_DIR$/HexToDecimalBetter/HexToDecimalBetter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HighLowGame/HighLowGame.iml" filepath="$PROJECT_DIR$/HighLowGame/HighLowGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IfStatements/IfStatements.iml" filepath="$PROJECT_DIR$/IfStatements/IfStatements.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Java.iml" filepath="$PROJECT_DIR$/Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lottery/Lottery.iml" filepath="$PROJECT_DIR$/Lottery/Lottery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MathFun/MathFun.iml" filepath="$PROJECT_DIR$/MathFun/MathFun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Methods MAX/Methods MAX.iml" filepath="$PROJECT_DIR$/Methods MAX/Methods MAX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Monte Carlo/Monte Carlo.iml" filepath="$PROJECT_DIR$/Monte Carlo/Monte Carlo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Palindrum/Palindrum.iml" filepath="$PROJECT_DIR$/Palindrum/Palindrum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pi Infinite Sum/Pi Infinite Sum.iml" filepath="$PROJECT_DIR$/Pi Infinite Sum/Pi Infinite Sum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Points/Points.iml" filepath="$PROJECT_DIR$/Points/Points.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Prime Numbers/Prime Numbers.iml" filepath="$PROJECT_DIR$/Prime Numbers/Prime Numbers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Programming with the Maths/Programming with the Maths.iml" filepath="$PROJECT_DIR$/Programming with the Maths/Programming with the Maths.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Subtraction Problem Output/Subtraction Problem Output.iml" filepath="$PROJECT_DIR$/Subtraction Problem Output/Subtraction Problem Output.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TaxTime/TaxTime.iml" filepath="$PROJECT_DIR$/TaxTime/TaxTime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Testing Zone/Testing Zone.iml" filepath="$PROJECT_DIR$/Testing Zone/Testing Zone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Welcome to Java 50/Welcome to Java 50.iml" filepath="$PROJECT_DIR$/Welcome to Java 50/Welcome to Java 50.iml" />
+      <module fileurl="file://$PROJECT_DIR$/What Day is it/What Day is it.iml" filepath="$PROJECT_DIR$/What Day is it/What Day is it.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Word Scrambler/Word Scrambler.iml" filepath="$PROJECT_DIR$/Word Scrambler/Word Scrambler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Zodiac/Zodiac.iml" filepath="$PROJECT_DIR$/Zodiac/Zodiac.iml" />
+      <module fileurl="file://$PROJECT_DIR$/guiPractice/guiPractice.iml" filepath="$PROJECT_DIR$/guiPractice/guiPractice.iml" />
+    </modules>
+  </component>
+</project>
