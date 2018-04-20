@@ -7,8 +7,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 
+//extends JFrame to make the window work when the class is used
 public class PixelFun extends JFrame {
-
+    //Data
     final int HEIGHT = 800;
     final int WIDTH = 800;
 
@@ -21,22 +22,28 @@ public class PixelFun extends JFrame {
 
     static PixelFun pf;
 
+    //Constructor
     public PixelFun(int numOfPoints) throws HeadlessException {
+        //sets up the window settings
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        //creates and adds the Draw Area class to the JFrame window
         dA = new DrawArea(numOfPoints, radius);
         setContentPane(dA);
 
     }
 
+    //Main method
     public static void main(String[] args) {
 
+        //Makes the window
         pf = new PixelFun(numOfPoints);
-        pf.t = new Timer(pf.delay, pf.dA);
+        pf.t = new Timer(pf.delay, pf.dA); //the timer is what animates it. It changes the timesTable value by the increment (inc) after the set delay in milliseconds
         pf.t.start();
 
+        //makes a dialog window to control the data and math for the lines and colors and speed
         JDialog controls = new JDialog();
         controls.setLocationRelativeTo(pf);
         controls.setLayout(new GridLayout(3, 8));
@@ -44,13 +51,14 @@ public class PixelFun extends JFrame {
         controls.setTitle("Controls");
         controls.isAlwaysOnTop();
 
-
+        //This next entire section makes all the visual parts that will go into the Dialog window for the controls
         JLabel timesTableLable = new JLabel("timesTable: ");
         JTextField timesTableTextField = new JTextField(5);
         JButton timesTableButton = new JButton("Apply");
         timesTableButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //takes the value from the timesTableTextField and sets the timesTable value to that. Then repaints
                 pf.dA.timesTable = Double.parseDouble(timesTableTextField.getText());
                 pf.dA.repaint();
             }
@@ -62,6 +70,7 @@ public class PixelFun extends JFrame {
         incButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //takes the value from the incTextField and sets the inc value to that. Then repaints
                 pf.dA.inc = Double.parseDouble(incTextField.getText());
                 pf.dA.repaint();
             }
@@ -73,8 +82,8 @@ public class PixelFun extends JFrame {
         FPSButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //takes the value from the delayTableTextField and sets the delay value to that. Then repaints
                 pf.t.setDelay(Integer.parseInt(FPSTextField.getText()));
-
             }
         });
 
@@ -84,6 +93,8 @@ public class PixelFun extends JFrame {
         PointsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //This closes the current window and recreates the window method with a new number of points, and recalculates these x and y values
+                //Then is restarts the timer
                 pf.setVisible(false);
                 pf = new PixelFun(Integer.parseInt(PointsTextField.getText()));
                 pf.t = new Timer(pf.delay, pf.dA);
@@ -97,6 +108,7 @@ public class PixelFun extends JFrame {
         alphaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //takes the value from the alphaTableTextField and sets the alpha value to that. Then repaints
                 pf.dA.alpha = Integer.parseInt(alphaTextField.getText());
                 pf.dA.repaint();
             }
@@ -108,6 +120,7 @@ public class PixelFun extends JFrame {
         alphaToggleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // checks the state of if the alpha is toggled on or off, then flips it, changing the transparency decision
                 if (pf.dA.colormode == 1) {
                     alphaToggleStat.setText("ON");
                     pf.dA.colormode = 2;
@@ -120,10 +133,11 @@ public class PixelFun extends JFrame {
 
         JLabel colorFormatLabel = new JLabel("Color Format");
         JLabel colorFormatStat = new JLabel("Circle");
-        JButton colorFormatButton = new JButton("Apply");
+        JButton colorFormatButton = new JButton("Toggle");
         colorFormatButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //checks the color format and flips it, changing the coloring decisions
                 if (pf.dA.rainbow == 1) {
                     pf.dA.rainbow = 2;
                     colorFormatStat.setText("Line");
@@ -140,11 +154,13 @@ public class PixelFun extends JFrame {
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //sets the increment to 0 so the animation stops moving. then repaints
                 pf.dA.inc = 0.0;
                 pf.dA.repaint();
             }
         });
 
+        //All the graphical opbjects that were just created are not added to the window
         controls.add(timesTableLable);
         controls.add(incLable);
         controls.add(FPSLable);
@@ -172,6 +188,7 @@ public class PixelFun extends JFrame {
         controls.add(colorFormatButton);
         controls.add(stopButton);
 
+        //makes the control dialog window the correct size based on its contents
         controls.pack();
 
 
@@ -179,21 +196,25 @@ public class PixelFun extends JFrame {
 
 }
 
-class DrawArea extends JPanel implements ActionListener {
-    double[][] vertices;
-    double timesTable = 0.0;
+//This is where all of the graphics go
+class DrawArea extends JPanel implements ActionListener { //is an action listener so that it can be animated with the timer
+    //Data
+    double[][] vertices; //array that will hold the calculated x and y coordinate for each point on the circle
+    double timesTable = 0.0; //controls the number that is being multiplied and modulosed by
     double radius;
-    double inc = 0.000;
-    int alpha = 100;
-    int colormode = 1;
-    int rainbow = 1;
+    double inc = 0.000; //controls how the TimesTable value changes every update from the timer
+    int alpha = 100; //controls the alpha value for the transparency
+    int colormode = 1; //controls if the colors have transparency or not. If they do, it is slowed down greatly
+    int rainbow = 1; //controls if the entire circle changes colors or if the lines themselves change colors
 
+    //Constructor
     public DrawArea(int numOfPoints, double radius) {
         vertices = new double[numOfPoints][2];
         double angle;
         double x;
         double y;
         this.radius = radius;
+        //This for loop calculates the points on the circle
         for (int i = 0; i < vertices.length; i++) {
             angle = 2 * Math.PI * i / numOfPoints;
             x = radius * Math.cos(Math.PI + angle);
@@ -208,9 +229,10 @@ class DrawArea extends JPanel implements ActionListener {
 
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.BLACK);
-        Shape background = new Rectangle2D.Float(0, 0, 1600, 800);
+        Shape background = new Rectangle2D.Float(0, 0, 800, 800); //greats a black backgroud
         g2.fill(background);
 
+        //controls the alpha or not. Honestly this part was confusing for me and i cant explain it bc i just got it to work Haha :)
         if (colormode == 1) {
             circle(g2, vertices, timesTable, rainbow);
         }
@@ -220,11 +242,14 @@ class DrawArea extends JPanel implements ActionListener {
 
     }
 
+    //this method creates the lines and therefore the design
     public void circle(Graphics2D g2, double[][] vertices, double timesTable, int colorMode) {
-        g2.translate(800 / 2.0, 800 / 2.25);
+        g2.translate(800 / 2.0, 800 / 2.25); //translate to the center of the window
 
         double x;
         double y;
+
+        //draws the points on the circle. Honestly, now that I look at this it is stupid to even do, but it helps with explaining if the color is changed
         for (int i = 0; i < vertices.length; i++) {
             x = vertices[i][0];
             y = vertices[i][1];
@@ -233,6 +258,7 @@ class DrawArea extends JPanel implements ActionListener {
             g2.fill(pixel);
         }
 
+        //transparency and color decision
         if (colorMode == 3) {
             int rgb = Color.HSBtoRGB(0.2f * (float) timesTable, 1.0f, 1.0f);
             g2.setColor(new Color((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF, alpha));
@@ -243,7 +269,8 @@ class DrawArea extends JPanel implements ActionListener {
 
         double result;
         for (int i = 0; i < vertices.length; i++) {
-            result = (timesTable * i) % vertices.length;
+            result = (timesTable * i) % vertices.length; //THIS IS THE MATH THAT DECIDES WHAT LINES GO WHERE. THIS IS THE ENTIRE POINT OF THE PROGRAM
+            //another transparency and color decision
             if (colorMode == 2) {
                 g2.setColor(new Color(Color.HSBtoRGB((1.0f / vertices.length) * i, 1.0f, 1.0f)));
             }
@@ -251,19 +278,23 @@ class DrawArea extends JPanel implements ActionListener {
                 int rgb = Color.HSBtoRGB((1.0f / vertices.length) * i, 1.0f, 1.0f);
                 g2.setColor(new Color((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF, alpha));
             }
+            //draws the line
             Shape line = new Line2D.Double(vertices[i][0], vertices[i][1], vertices[(int) result][0], vertices[(int) result][1]);
             g2.draw(line);
         }
 
-        DecimalFormat df = new DecimalFormat("0.######");
+        //Adds the values counters on the top and the little signature on the bottom Haha :)
+        DecimalFormat df = new DecimalFormat("0.00000");
         g2.setColor(Color.WHITE);
         g2.drawString(df.format(timesTable) + " | " + df.format(inc), -20, -1 * ((int) radius + 30));
         g2.drawString("Vinnie is a God", -40, ((int) radius + 30));
 
+        //translates back to the top left corner. This was more useful when I had two circles going, but that was just too many calculations
         g2.translate(-800 / 2.0, -800 / 2.25);
 
     }
 
+    //This is what animates and then repaints the graphics everytime the Timer changes after the set delay
     @Override
     public void actionPerformed(ActionEvent e) {
         timesTable += inc;
