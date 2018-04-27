@@ -27,26 +27,38 @@ public class TicTacToe {
         return pos;
     }
 
-    private boolean winner() {
-        boolean won = false;
+    private int winner() {
+        int won = 0;
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != 0) {
-                won = true;
+                if (board[i][0] == 1) {
+                    won = 1;
+                } else {
+                    won = 2;
+                }
             }
         }
         for (int i = 0; i < 3; i++) {
             if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != 0) {
-                won = true;
+                if (board[0][i] == 1) {
+                    won = 1;
+                } else {
+                    won = 2;
+                }
             }
         }
         if ((board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[2][2] != 0) || (board[0][2] == board[2][0] && board[1][1] == board[0][2] && board[1][1] != 0)) {
-            won = true;
+            if (board[0][0] == 1) {
+                won = 1;
+            } else {
+                won = 2;
+            }
         }
         return won;
     }
 
     private int[] userGen() {
-        System.out.println("Input a space for your guess: ");
+        System.out.print("Input a space for your guess: ");
         int row = key.nextInt();
         int col = key.nextInt();
         int pos[] = {row, col};
@@ -59,13 +71,13 @@ public class TicTacToe {
         } else if (player == 2) {
             board[pos[0]][pos[1]] = 2;
         } else {
-            System.out.println("You fucked up vinnie");
+            System.out.println("Something went wrong");
         }
     }
 
     public void play() {
         int counter = 0;
-        while (!this.winner()) {
+        while (this.winner() == 0) {
             if (counter % 2 == 0) {
                 this.showBoard();
                 this.update(this.userGen(), 1);
@@ -75,6 +87,8 @@ public class TicTacToe {
                 counter++;
             }
         }
+        String champ = (this.winner() == 1) ? "player":"computer" ;
+        System.out.println("The game is over!\nCongratulations " + champ + "!");
     }
 
     public void showBoard() {
