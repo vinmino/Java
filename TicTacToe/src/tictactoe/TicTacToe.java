@@ -1,5 +1,9 @@
 package tictactoe;
 
+import jdk.nashorn.internal.scripts.JD;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -8,10 +12,24 @@ public class TicTacToe {
     int board[][];
     Scanner key;
     Random rand = new Random();
+    ButtonPanel panel;
+    JButton[][] gBoardRef;
+    int counter = 0;
 
     public TicTacToe() {
         this.board = new int[3][3];
         this.key = new Scanner(System.in);
+    }
+
+    public TicTacToe(ButtonPanel panel) {
+        this.board = new int[3][3];
+        this.key = new Scanner(System.in);
+        this.panel = panel;
+        this.gBoardRef = new JButton[][]{
+                {panel.TL, panel.TM, panel.TR},
+                {panel.ML, panel.MM, panel.MR},
+                {panel.BL, panel.BM, panel.BR}
+        };
     }
 
     private int[] compGen() {
@@ -21,7 +39,7 @@ public class TicTacToe {
         do {
             row = rand.nextInt(3);
             col = rand.nextInt(3);
-        } while(board[row][col] != 0 || board[row][col] == 1 || board[row][col] == 2);
+        } while (board[row][col] != 0 || board[row][col] == 1 || board[row][col] == 2);
         pos[0] = row;
         pos[1] = col;
         return pos;
@@ -75,6 +93,38 @@ public class TicTacToe {
         }
     }
 
+    public void gPlay(int[] pos, ButtonPanel panel) {
+        int[] compPos;
+        JDialog winnerWindow = new JDialog();
+        JTextField winner = new JTextField("");
+        if (this.winner() == 0) {
+            this.update(pos, 1);
+            counter++;
+        }
+        if (this.winner() == 0) {
+            compPos = this.compGen();
+            this.update(compPos, 2);
+            this.gUpdate(compPos, panel);
+            counter++;
+        } else {
+            winner.setText("The player won!");
+            /*System.exit(0);*/
+        }
+        if (this.winner() != 0) {
+            winner.setText("The computer won!");
+            /*System.exit(0);*/
+        }
+        if (!winner.toString().equals("")) {
+            winnerWindow.add(winner);
+            winnerWindow.setVisible(true);
+        }
+    }
+
+
+    public void gUpdate(int[] pos, ButtonPanel panel) {
+        gBoardRef[pos[0]][pos[1]].setText(" O ");
+    }
+
     public void play() {
         int counter = 0;
         while (this.winner() == 0) {
@@ -87,7 +137,7 @@ public class TicTacToe {
                 counter++;
             }
         }
-        String champ = (this.winner() == 1) ? "player":"computer" ;
+        String champ = (this.winner() == 1) ? "player" : "computer";
         System.out.println("The game is over!\nCongratulations " + champ + "!");
     }
 
