@@ -127,6 +127,7 @@ public class TicTacToe {
             });
             winnerWindow.add(close);
             winnerWindow.pack();
+            winnerWindow.setLocationRelativeTo(panel);
             winnerWindow.setVisible(true);
         }
     }
