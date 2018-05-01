@@ -4,6 +4,8 @@ import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -96,7 +98,7 @@ public class TicTacToe {
     public void gPlay(int[] pos, ButtonPanel panel) {
         int[] compPos;
         JDialog winnerWindow = new JDialog();
-        JTextField winner = new JTextField("");
+        JLabel winner = new JLabel("");
         if (this.winner() == 0) {
             this.update(pos, 1);
             counter++;
@@ -106,16 +108,25 @@ public class TicTacToe {
             this.update(compPos, 2);
             this.gUpdate(compPos, panel);
             counter++;
-        } else {
+        }
+        if (this.winner() == 1) {
             winner.setText("The player won!");
             /*System.exit(0);*/
-        }
-        if (this.winner() != 0) {
+        } else if (this.winner() == 2) {
             winner.setText("The computer won!");
-            /*System.exit(0);*/
         }
-        if (!winner.toString().equals("")) {
+        if (!winner.getText().equals("")) {
+            winnerWindow.setLayout(new GridLayout(2,1));
             winnerWindow.add(winner);
+            JButton close = new JButton("Close");
+            close.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.exit(0);
+                }
+            });
+            winnerWindow.add(close);
+            winnerWindow.pack();
             winnerWindow.setVisible(true);
         }
     }
