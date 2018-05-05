@@ -9,38 +9,27 @@ public class window extends JFrame {
 
     public window() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(800, 800);
         setVisible(true);
-        setTitle("Expanding Circles");
+        setSize(800,800);
+        setContentPane(new da());
         setLocationRelativeTo(null);
     }
 
-    static void main(String[] args) {
+}
 
-        window window = new window();
+class da extends JPanel implements ActionListener {
 
-        for (int i = 0; i < 15; i++) {
-
-        }
+    public da() {
 
     }
 
-
-
-}
-
-/*
-class DrawArea extends JPanel implements ActionListener {
-
     @Override
-    */
-/*protected void paintComponent(Graphics g) {
-        for
-    }*//*
+    protected void paintComponent(Graphics g) {
 
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
-}*/
+}
