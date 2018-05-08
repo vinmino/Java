@@ -9,6 +9,10 @@ public class MyInteger {
         this.value = x;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public boolean isEven() {
         return (value % 2 == 0);
     }
