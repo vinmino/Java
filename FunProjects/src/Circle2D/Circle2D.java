@@ -32,13 +32,13 @@ public class Circle2D {
     public double getPerimeter() {
         return (Math.PI * 2 * this.radius);
     }
-    public boolean contains(double x, double y) {
+    public boolean contains(double x, double y) { //checks that the distance between the point and the center are less than or equal to the radius
         return (Math.sqrt(Math.pow(x - this.getX(), 2) + Math.pow(y - this.getY(), 2)) <= this.getRadius());
     }
-    public boolean contains(Circle2D otherCircle) {
+    public boolean contains(Circle2D otherCircle) { //checks that the distance between the centers of the circles are less than or equal to the radius of this circle
         return (Math.sqrt(Math.pow(otherCircle.getX() - this.getX(), 2) + Math.pow(otherCircle.getY() - this.getY(), 2)) + otherCircle.getRadius() <= this.getRadius());
     }
-    public boolean overlaps(Circle2D otherCircle) {
+    public boolean overlaps(Circle2D otherCircle) { //checks that the distance between the centers of the circles are less than or equal to the sum of their radii
         return (Math.sqrt(Math.pow(otherCircle.getX() - this.getX(), 2) + Math.pow(otherCircle.getY() - this.getY(), 2)) <= this.getRadius() + otherCircle.getRadius());
     }
 
