@@ -1,5 +1,7 @@
 package myInteger;
 
+import java.util.Scanner;
+
 public class MyInteger {
     int value;
 
@@ -72,5 +74,14 @@ public class MyInteger {
 
     public static int parseInt(String digits) {
         return Integer.parseInt(digits);
+    }
+
+    public static void main(String[] args) {
+        Scanner key = new Scanner(System.in);
+        System.out.print("Input an integer to put in the MyInteger object: ");
+        MyInteger myObject = new MyInteger(key.nextInt());
+        System.out.println("The method isEven() returned: " + ((myObject.isEven()) ? "true":"false"));
+        System.out.println("The method isOdd() returned: " + ((myObject.isOdd()) ? "true":"false"));
+        System.out.println("The method isPrime() returned: " + ((myObject.isPrime()) ? "true":"false"));
     }
 }
