@@ -80,8 +80,10 @@ public class MyInteger {
         Scanner key = new Scanner(System.in);
         System.out.print("Input an integer to put in the MyInteger object: ");
         MyInteger myObject = new MyInteger(key.nextInt());
+
         System.out.println("The method isEven() returned: " + ((myObject.isEven()) ? "true":"false"));
         System.out.println("The method isOdd() returned: " + ((myObject.isOdd()) ? "true":"false"));
         System.out.println("The method isPrime() returned: " + ((myObject.isPrime()) ? "true":"false"));
+        System.out.println("The numer 5 is equal to the MyInteger value: " + ((myObject.equals(5)) ? "true":"false"));
     }
 }
