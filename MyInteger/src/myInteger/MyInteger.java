@@ -88,6 +88,6 @@ public class MyInteger {
         System.out.println("The method isEven() returned: " + ((myObject.isEven()) ? "true":"false"));
         System.out.println("The method isOdd() returned: " + ((myObject.isOdd()) ? "true":"false"));
         System.out.println("The method isPrime() returned: " + ((myObject.isPrime()) ? "true":"false"));
-        System.out.println("The numer 5 is equal to the MyInteger value: " + ((myObject.equals(5)) ? "true":"false"));
+        System.out.println("The number 5 is equal to the MyInteger value: " + ((myObject.equals(5)) ? "true":"false"));
     }
 }
