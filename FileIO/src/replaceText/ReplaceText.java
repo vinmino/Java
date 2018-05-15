@@ -34,7 +34,7 @@ public class ReplaceText {
         try {
             try (Scanner fileReader = new Scanner(sourceFile); PrintWriter fileWriter = new PrintWriter(targetFile)) {
                 while(fileReader.hasNextLine()) {
-                    fileWriter.write(fileReader.nextLine().replace("bee", "turtle").replace("Bee", "Turtle") + "\n");
+                    fileWriter.write(fileReader.nextLine().replace(oldString, newString) + "\n");
                 }
                 System.out.print("\n-----The file was read and written-----\n");
             }
