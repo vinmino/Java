@@ -1,3 +1,5 @@
+package replaceText;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -31,8 +33,10 @@ public class ReplaceText {
         }
         try {
             try (Scanner fileReader = new Scanner(sourceFile); PrintWriter fileWriter = new PrintWriter(targetFile)) {
-                fileWriter.write(fileReader.toString().replaceAll(oldString, newString));
-                System.out.print("\n-----The file was written and read-----\n");
+                while(fileReader.hasNextLine()) {
+                    fileWriter.write(fileReader.nextLine().replace("bee", "turtle").replace("Bee", "Turtle") + "\n");
+                }
+                System.out.print("\n-----The file was read and written-----\n");
             }
         } catch (Exception ex) {
             System.out.print("\n-----Something went horribly wrong-----\n");
