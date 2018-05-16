@@ -11,26 +11,27 @@ public class ReplaceText {
         File targetFile;
         String oldString;
         String newString;
-        if (args.length != 0) {
+        if (args.length != 0) { //This section handles the program if it is in the command line
             sourceFile = new File(args[0]);
             targetFile = new File(args[1]);
             oldString = args[2];
             newString = args[2];
-        } else {
-            Scanner commandLine = new Scanner(System.in);
+        } else { //This handles it if it is run in the console of an IDE
+            Scanner consoleText = new Scanner(System.in);
 
             System.out.print("Input the source file: ");
-            sourceFile = new File(commandLine.nextLine());
+            sourceFile = new File(consoleText.nextLine());
 
             System.out.print("Input the target file: ");
-            targetFile = new File(commandLine.nextLine());
+            targetFile = new File(consoleText.nextLine());
 
             System.out.print("Input the string to find: ");
-            oldString = commandLine.nextLine();
+            oldString = consoleText.nextLine();
 
             System.out.print("Input the string to replace with: ");
-            newString = commandLine.nextLine();
+            newString = consoleText.nextLine();
         }
+
         try {
             try (Scanner fileReader = new Scanner(sourceFile); PrintWriter fileWriter = new PrintWriter(targetFile)) {
                 while(fileReader.hasNextLine()) {
