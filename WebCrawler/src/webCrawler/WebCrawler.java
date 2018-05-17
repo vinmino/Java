@@ -1,7 +1,5 @@
 package webCrawler;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -11,16 +9,41 @@ public class WebCrawler {
     String[] pendingURLs = new String[1];
     String[] newlyFoundURLs = new String[0];
     String[] seenURLs = new String[0];
+    String originalURL;
     boolean done = false;
 
     //Constructor(s)
     public WebCrawler() {
         System.out.print("Input a URL to start crawling: ");
         pendingURLs[0] = new Scanner(System.in).nextLine();
+        originalURL = pendingURLs[0];
+        if (originalURL.startsWith("http")) {
+            String prefix = originalURL.substring(0, originalURL.indexOf("/") + 1);
+            String root = originalURL.substring(originalURL.indexOf("/") + 1);
+            if (root.contains("/")) {
+                originalURL = prefix + root.substring(0, root.indexOf("/"));
+            }
+        } else {
+            if (originalURL.contains("/")) {
+                originalURL = originalURL.substring(0, originalURL.indexOf("/"));
+            }
+        }
     }
 
     public WebCrawler(String urlInput) {
         pendingURLs[0] = urlInput;
+        originalURL = pendingURLs[0];
+        if (originalURL.startsWith("http")) {
+            String prefix = originalURL.substring(0, originalURL.indexOf("/") + 1);
+            String root = originalURL.substring(originalURL.indexOf("/") + 1);
+            if (root.contains("/")) {
+                originalURL = prefix + root.substring(0, root.indexOf("/"));
+            }
+        } else {
+            if (originalURL.contains("/")) {
+                originalURL = originalURL.substring(0, originalURL.indexOf("/"));
+            }
+        }
     }
 
     //Methods
@@ -46,8 +69,8 @@ public class WebCrawler {
 
     public String[] delFromArray(String[] inputArray) {
         String[] outputArray = new String[inputArray.length - 1];
-        for (int i = 0; i < inputArray.length - 1; i++) {
-            outputArray[i] = inputArray[i];
+        for (int i = 1; i < inputArray.length; i++) {
+            outputArray[i - 1] = inputArray[i];
         }
         return outputArray;
     }
@@ -57,6 +80,9 @@ public class WebCrawler {
         String[] foundURLs = new String[0];
         int startingIndex;
         try {
+            if (urlString.startsWith("/")) {
+                urlString = originalURL + urlString;
+            }
             URL url = new URL(urlString);
             Scanner viewer = new Scanner(url.openStream());
             while (viewer.hasNextLine()) {
@@ -65,7 +91,9 @@ public class WebCrawler {
                     startingIndex = workingString.indexOf("href=\"");
                     workingString = workingString.substring(startingIndex + 6);
                     workingString = workingString.substring(0, workingString.indexOf("\""));
-                    foundURLs = addToArray(foundURLs, workingString);
+                    if (!workingString.equals("#") && !workingString.contains("javascript:void(0)") && !workingString.contains("javascript: void(0)")) {
+                        foundURLs = addToArray(foundURLs, workingString);
+                    }
                 }
             }
             return foundURLs;
@@ -84,10 +112,14 @@ public class WebCrawler {
     }
 
     public void crawl() {
-        while (pendingURLs.length > 0) {
-            newlyFoundURLs = searchForURLs(pendingURLs[pendingURLs.length - 1]);
+        int counter = 0;
+        while (pendingURLs.length > 0/* && counter <= 100*/) {
+            newlyFoundURLs = this.searchForURLs(pendingURLs[0]);
+            seenURLs = this.addToArray(seenURLs, pendingURLs[0]);
+            System.out.println(seenURLs[seenURLs.length - 1]);
             pendingURLs = this.delFromArray(pendingURLs);
-            if(newlyFoundURLs[0] != null) {
+            counter++;
+            if(newlyFoundURLs != null) {
                 for (int i = 0; i < newlyFoundURLs.length; i++) {
                     if (!this.isInsideArray(seenURLs, newlyFoundURLs[i])) {
                         pendingURLs = this.addToArray(pendingURLs, newlyFoundURLs[i]);
@@ -103,9 +135,9 @@ public class WebCrawler {
     public static void main(String[] args) {
         WebCrawler webCrawler = new WebCrawler("http://www.wrsd.net/wrhs");
         webCrawler.crawl();
-        for (int i = 0; i < webCrawler.seenURLs.length; i++) {
+        /*for (int i = 0; i < webCrawler.seenURLs.length; i++) {
             System.out.println(webCrawler.seenURLs[i]);
-        }
+        }*/
 
     }
 }
