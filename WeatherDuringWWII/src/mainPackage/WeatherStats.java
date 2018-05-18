@@ -37,15 +37,17 @@ public class WeatherStats {
     }
 
     public static void main(String[] args) {
-        DataTable WorkingTable = new DataTable("C:\\Coding\\Java\\WeatherDuringWWII\\src\\mainPackage\\Weather.csv");
+        DataTable WorkingTable = new DataTable("C:\\Users\\vincentlomino19\\IdeaProjects\\Java\\WeatherDuringWWII\\src\\mainPackage\\Weather.csv");
     }
 
 }
 
 class DataTable {
     /* Data */
-    String[][] headersAndValues;
+    String[] headersAndValues;
+    DataColumns[] totalColumns;
     String[][] dataTable;
+    int[] dataTypeList;
     int numOfRows;
     int numOfCols;
 
@@ -79,19 +81,26 @@ class DataTable {
         }
         System.out.print("The total number of columns is " + this.numOfCols + "\n");
 
-        this.headersAndValues = new String[this.numOfCols][2];
+        this.headersAndValues = new String[this.numOfCols];
         workingString = starterStringArray[0];
         int headersIndex = 0;
-        while(workingString.contains(",") /*&& workingString.indexOf(",") != workingString.lastIndexOf(",")*/) {
-            headersAndValues[headersIndex][0] = workingString.substring(0, workingString.indexOf(","));
+        while (workingString.contains(",") /*&& workingString.indexOf(",") != workingString.lastIndexOf(",")*/) {
+            headersAndValues[headersIndex] = workingString.substring(0, workingString.indexOf(","));
             headersIndex++;
             workingString = workingString.substring(workingString.indexOf(",") + 1);
         }
-        headersAndValues[headersIndex][0] = workingString;
+        headersAndValues[headersIndex] = workingString;
 
-        for (String[] header : headersAndValues) {
-            System.out.println(header[0]);
+        /*Scanner dataTypeQuestions = new Scanner(System.in);
+        this.dataTypeList = new int[numOfCols];
+        for (int i = 0; i < dataTypeList.length; i++) {
+            System.out.print("Data Type List:\n\tDouble = 1\n\tString = 2\n\tBoolean = 3\n\tColumn " + i + ": ");
+            dataTypeList[i] = dataTypeQuestions.nextInt();
         }
+        dataTypeQuestions.close();*/
+
+
+        totalColumns = new DataColumns[numOfCols];
 
     }
 
@@ -120,8 +129,19 @@ class DataTable {
 
 class DataColumns {
     /* Data */
+    String header;
+    String[] data;
 
     /* Constructor */
+    public DataColumns(String[] col) {
+        this.header = col[0];
+        this.data = new String[col.length - 1];
+        for (int i = 1; i < col.length; i++) {
+            data[i-1] = col[i];
+            
+        }
+
+    }
 
     /* Methods */
 
