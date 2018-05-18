@@ -17,13 +17,13 @@ public class WebCrawler {
         System.out.print("Input a URL to start crawling: ");
         pendingURLs[0] = new Scanner(System.in).nextLine();
         originalURL = pendingURLs[0];
-        if (originalURL.startsWith("http")) {
+        if (originalURL.startsWith("http")) { //Deals with parsing the part after the .com if there is a http there too
             String prefix = originalURL.substring(0, originalURL.indexOf("/") + 1);
             String root = originalURL.substring(originalURL.indexOf("/") + 1);
             if (root.contains("/")) {
                 originalURL = prefix + root.substring(0, root.indexOf("/"));
             }
-        } else {
+        } else { //Deals with parsing the part after the .com
             if (originalURL.contains("/")) {
                 originalURL = originalURL.substring(0, originalURL.indexOf("/"));
             }
@@ -33,7 +33,7 @@ public class WebCrawler {
     public WebCrawler(String urlInput) {
         pendingURLs[0] = urlInput;
         originalURL = pendingURLs[0];
-        if (originalURL.startsWith("http")) {
+        if (originalURL.startsWith("http")) { //Same as above constructor
             String prefix = originalURL.substring(0, originalURL.indexOf("/") + 1);
             String root = originalURL.substring(originalURL.indexOf("/") + 1);
             if (root.contains("/")) {
@@ -47,7 +47,7 @@ public class WebCrawler {
     }
 
     //Methods
-    public String[] addToArray(String[] inputArray, String addOn) {
+    public String[] addToArray(String[] inputArray, String addOn) { //Takes in an array, makes an array 1 larger and adds the new element and all old ones to this array
         String[] outputArray = new String[inputArray.length + 1];
         for (int i = 0; i < inputArray.length; i++) {
             outputArray[i] = inputArray[i];
@@ -56,7 +56,7 @@ public class WebCrawler {
         return outputArray;
     }
 
-    public String[] addToArray(String[] inputArray, String[] addOn) {
+    public String[] addToArray(String[] inputArray, String[] addOn) { //Tankes in two arrays, makes a single larger array, adds them both to it
         String[] outputArray = new String[inputArray.length + addOn.length];
         for (int i = 0; i < inputArray.length; i++) {
             outputArray[i] = inputArray[i];
@@ -67,7 +67,7 @@ public class WebCrawler {
         return outputArray;
     }
 
-    public String[] delFromArray(String[] inputArray) {
+    public String[] delFromArray(String[] inputArray) { //Deletes the first element in the array and shortens it by one
         String[] outputArray = new String[inputArray.length - 1];
         for (int i = 1; i < inputArray.length; i++) {
             outputArray[i - 1] = inputArray[i];
@@ -75,7 +75,7 @@ public class WebCrawler {
         return outputArray;
     }
 
-    public String[] searchForURLs(String urlString) {
+    public String[] searchForURLs(String urlString) { //Parses the html and searches for "href="" and then parses the url out of the quotes
         String workingString;
         String[] foundURLs = new String[0];
         int startingIndex;
@@ -91,7 +91,7 @@ public class WebCrawler {
                     startingIndex = workingString.indexOf("href=\"");
                     workingString = workingString.substring(startingIndex + 6);
                     workingString = workingString.substring(0, workingString.indexOf("\""));
-                    if (!workingString.equals("#") && !workingString.contains("javascript:void(0)") && !workingString.contains("javascript: void(0)")) {
+                    if (!workingString.equals("#") && !workingString.contains("javascript:void(0)") && !workingString.contains("javascript: void(0)")) { //deals with common errors to make it more efficient
                         foundURLs = addToArray(foundURLs, workingString);
                     }
                 }
@@ -102,7 +102,7 @@ public class WebCrawler {
         }
     }
 
-    public boolean isInsideArray(String[] array, String element) {
+    public boolean isInsideArray(String[] array, String element) { //Checks if a url is already in an array
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(element)) {
                 return true;
@@ -111,7 +111,7 @@ public class WebCrawler {
         return false;
     }
 
-    public void crawl() {
+    public void crawl() { //Does the actual work and logic outlined by the notes in the Google Classroom slides
         int counter = 0;
         while (pendingURLs.length > 0/* && counter <= 100*/) {
             newlyFoundURLs = this.searchForURLs(pendingURLs[0]);
@@ -132,8 +132,9 @@ public class WebCrawler {
 
 
     //Main Method
-    public static void main(String[] args) {
-        WebCrawler webCrawler = new WebCrawler("http://www.wrsd.net/wrhs");
+    public static void main(String[] args) { //Runs the program
+        //WebCrawler webCrawler = new WebCrawler("http://www.wrsd.net/wrhs");
+        WebCrawler webCrawler = new WebCrawler();
         webCrawler.crawl();
         /*for (int i = 0; i < webCrawler.seenURLs.length; i++) {
             System.out.println(webCrawler.seenURLs[i]);
