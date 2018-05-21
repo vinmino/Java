@@ -5,106 +5,55 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class WeatherStats {
-    /* Data* */
-    String[][] totalDataSet;
-    File data;
-
-    /* Constructor */
-    public WeatherStats(String fileName) {
-        try {
-            this.data = new File(fileName);
-            Scanner tester = new Scanner(this.data);
-            tester.close();
-        } catch (FileNotFoundException ex) {
-            System.out.print("\n-----File not found-----\n-----Ending Program-----\n");
-            System.exit(666);
-        }
-
-    }
-
-    /* Methods */
-    public void readFileAndPopulate() {
-
-    }
-
-    public String[] addToStringArray(String[] oldArray, String input) {
-        String[] output = new String[oldArray.length + 1];
-        for (int i = 0; i < oldArray.length; i++) {
-            output[i] = oldArray[i];
-        }
-        output[output.length - 1] = input;
-        return output;
-    }
-
     public static void main(String[] args) {
-        DataTable WorkingTable = new DataTable("C:\\Users\\vincentlomino19\\IdeaProjects\\Java\\WeatherDuringWWII\\src\\mainPackage\\Weather.csv");
+        DataTable WorkingTable = new DataTable();
+        System.out.println("The headers are: ");
+        for (int i = 0; i < WorkingTable.getHeaders().length; i++) {
+            System.out.println(WorkingTable.getHeaders()[i]);
+        }
     }
-
 }
 
 class DataTable {
-    /* Data */
-    String[] headersAndValues;
-    DataColumns[] totalColumns;
-    String[][] dataTable;
-    int[] dataTypeList;
-    int numOfRows;
-    int numOfCols;
+    public String[] headers;
+    public String[] rows;
+    public String[][] flippedCells;
+    public String[][] originalCells;
+    public DataColumn[] columns;
 
-    /* Constructor */
-    public DataTable(String filePath) {
-
-        String[] starterStringArray = new String[0];
-        try {
-            File file = new File(filePath);
-            Scanner reader = new Scanner(file);
+    public DataTable() {
+        //System.out.print("Input an absolute file path: ");
+        //File file = new File(new Scanner(System.in).nextLine());
+        File file = new File("C:\\Users\\vincentlomino19\\IdeaProjects\\Java\\WeatherDuringWWII\\src\\mainPackage\\Weather.csv");
+        try (Scanner reader = new Scanner(file)) {
+            rows = new String[0];
             while (reader.hasNextLine()) {
-                starterStringArray = this.addToStringArray(starterStringArray, reader.nextLine());
+                rows = addToStringArray(rows, reader.nextLine());
             }
-            reader.close();
         } catch (FileNotFoundException ex) {
-            System.out.print("\n-----File not found-----\n-----Ending Program-----\n");
             System.exit(666);
         }
-        this.numOfRows = starterStringArray.length;
-        System.out.print("The total number of rows is " + this.numOfRows + "\n");
 
-        this.numOfCols = 1;
-        String workingString = starterStringArray[0];
-        if (!workingString.contains(",")) {
-            System.out.print("\n-----This file is not formatted like a CSV should be-----\n-----Ending Program-----\n");
-            System.exit(1234);
+        headers = rows[0].split(",");
+        originalCells = new String[rows.length - 1][headers.length];
+        for (int i = 1; i <= headers.length; i++) {
+            originalCells[i - 1] = rows[i].split(",");
         }
-        while (workingString.contains(",")) {
-            this.numOfCols++;
-            workingString = workingString.substring(workingString.indexOf(",") + 1);
+
+        flippedCells = new String[headers.length][rows.length - 1];
+        for (int i = 0; i < rows.length - 1; i++) {
+            for (int j = 0; j < headers.length; j++) {
+                flippedCells[j][i] = originalCells[i][j];
+            }
         }
-        System.out.print("The total number of columns is " + this.numOfCols + "\n");
 
-        this.headersAndValues = new String[this.numOfCols];
-        workingString = starterStringArray[0];
-        int headersIndex = 0;
-        while (workingString.contains(",") /*&& workingString.indexOf(",") != workingString.lastIndexOf(",")*/) {
-            headersAndValues[headersIndex] = workingString.substring(0, workingString.indexOf(","));
-            headersIndex++;
-            workingString = workingString.substring(workingString.indexOf(",") + 1);
+        columns = new DataColumn[headers.length];
+        for (int i = 0; i < columns.length; i++) {
+            columns[i] = new DataColumn(headers[i], flippedCells[i]);
         }
-        headersAndValues[headersIndex] = workingString;
-
-        /*Scanner dataTypeQuestions = new Scanner(System.in);
-        this.dataTypeList = new int[numOfCols];
-        for (int i = 0; i < dataTypeList.length; i++) {
-            System.out.print("Data Type List:\n\tDouble = 1\n\tString = 2\n\tBoolean = 3\n\tColumn " + i + ": ");
-            dataTypeList[i] = dataTypeQuestions.nextInt();
-        }
-        dataTypeQuestions.close();*/
-
-
-        totalColumns = new DataColumns[numOfCols];
 
     }
 
-    /* Methods */
     public String[] addToStringArray(String[] oldArray, String input) {
         String[] output = new String[oldArray.length + 1];
         for (int i = 0; i < oldArray.length; i++) {
@@ -114,35 +63,74 @@ class DataTable {
         return output;
     }
 
-    public String[] deleteFromIndex(String[] array, int index) {
-        String[] output = new String[array.length - 1];
-        for (int i = 0, j = 0; i < array.length; i++) {
-            if (i != index) {
-                output[i] = array[i];
-                j++;
-            }
-        }
-        return output;
+    public String[] getHeaders() {
+        return headers;
     }
 
+    public String[][] getOriginalCells() {
+        return originalCells;
+    }
+
+    public String[][] getFlippedCells() {
+        return flippedCells;
+    }
+
+    public String[] getRows() {
+        return rows;
+    }
+
+    public DataColumn[] getColumns() {
+        return columns;
+    }
 }
 
-class DataColumns {
-    /* Data */
+class DataColumn {
+
     String header;
-    String[] data;
+    String[] input;
+    String[] stringArray;
+    double[] doubleArray;
+    char[] charArray;
 
-    /* Constructor */
-    public DataColumns(String[] col) {
-        this.header = col[0];
-        this.data = new String[col.length - 1];
-        for (int i = 1; i < col.length; i++) {
-            data[i-1] = col[i];
-            
-        }
-
+    public DataColumn(String header, String[] input) {
+        this.header = header;
+        this.stringArray = input;
+        this.input = input;
     }
 
-    /* Methods */
+    public void setToDouble() {
+        try {
+            for (int i = 0; i < input.length; i++) {
+                doubleArray[i] = Double.parseDouble(input[i]);
+            }
+        } catch(Exception ex) {
+            System.out.println("-----This operation did not process correctly-----\n-----Check data set type-----");
+        }
+    }
 
+    public void setToChar() {
+        try {
+            for (int i = 0; i < input.length; i++) {
+                doubleArray[i] = input[i].toCharArray()[0];
+            }
+        } catch(Exception ex) {
+            System.out.println("-----This operation did not process correctly-----\n-----Check data set type-----");
+        }
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String[] getStringArray() {
+        return stringArray;
+    }
+
+    public double[] getDoubleArray() {
+        return doubleArray;
+    }
+
+    public char[] getCharArray() {
+        return charArray;
+    }
 }
