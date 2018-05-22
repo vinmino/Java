@@ -7,10 +7,11 @@ import java.util.Scanner;
 public class WeatherStats {
     public static void main(String[] args) {
         DataTable WorkingTable = new DataTable();
-        System.out.println("The headers are: ");
+        WorkingTable.printDataTable();
+        /*System.out.println("The headers are: ");
         for (int i = 0; i < WorkingTable.getHeaders().length; i++) {
             System.out.println(WorkingTable.getHeaders()[i]);
-        }
+        }*/
     }
 }
 
@@ -41,8 +42,8 @@ class DataTable {
         }
 
         flippedCells = new String[headers.length][rows.length - 1];
-        for (int i = 0; i < rows.length - 1; i++) {
-            for (int j = 0; j < headers.length; j++) {
+        for (int i = 0; i < originalCells.length; i++) {
+            for (int j = 0; j < originalCells[i].length; j++) {
                 flippedCells[j][i] = originalCells[i][j];
             }
         }
@@ -51,7 +52,6 @@ class DataTable {
         for (int i = 0; i < columns.length; i++) {
             columns[i] = new DataColumn(headers[i], flippedCells[i]);
         }
-
     }
 
     public String[] addToStringArray(String[] oldArray, String input) {
@@ -81,6 +81,18 @@ class DataTable {
 
     public DataColumn[] getColumns() {
         return columns;
+    }
+
+    public void printDataTable() {
+        for (int j = 0; j < columns.length / 10; j++) {
+            for (int i = 0; i < columns[j].getStringArray().length; i++) {
+                if (columns[j].getStringArray().length - 1 == i) {
+                    System.out.print(columns[j].getStringArray()[i] + "\n");
+                } else {
+                    System.out.print(columns[j].getStringArray()[i] + ",\t\t\t");
+                }
+            }
+        }
     }
 }
 
