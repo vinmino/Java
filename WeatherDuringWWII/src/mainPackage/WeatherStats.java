@@ -5,10 +5,45 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class WeatherStats {
+
+    String[][] cells;
+    String[] headers;
+    String[] rows;
+
+    public WeatherStats() {
+
+        //System.out.print("Input an absolute file path: ");
+        //File file = new File(new Scanner(System.in).nextLine());
+        File file = new File("C:\\Users\\vincentlomino19\\IdeaProjects\\Java\\WeatherDuringWWII\\src\\mainPackage\\Weather.csv");
+        try (Scanner reader = new Scanner(file)) {
+            rows = new String[0];
+            while (reader.hasNextLine()) {
+                rows = addToStringArray(rows, reader.nextLine());
+            }
+        } catch (FileNotFoundException ex) {
+            System.exit(666);
+        }
+
+        headers = rows[0].split(",");
+        cells = new String[rows.length - 1][headers.length];
+        for (int i = 1; i <= headers.length; i++) {
+            cells[i - 1] = rows[i].split(",");
+        }
+    }
+
+    public String[] addToStringArray(String[] oldArray, String input) {
+        String[] output = new String[oldArray.length + 1];
+        for (int i = 0; i < oldArray.length; i++) {
+            output[i] = oldArray[i];
+        }
+        output[output.length - 1] = input;
+        return output;
+    }
+
     public static void main(String[] args) {
-        DataTable WorkingTable = new DataTable();
+        /*DataTable WorkingTable = new DataTable();
         WorkingTable.printDataTable();
-        /*System.out.println("The headers are: ");
+        *//*System.out.println("The headers are: ");
         for (int i = 0; i < WorkingTable.getHeaders().length; i++) {
             System.out.println(WorkingTable.getHeaders()[i]);
         }*/
