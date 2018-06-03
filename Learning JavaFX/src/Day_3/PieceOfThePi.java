@@ -18,6 +18,7 @@ public class PieceOfThePi extends Application {
         double HEIGHT = 300;
         double RADIUS = 100;
         int NumOfPieces = 8;
+        int duration = 1000;
         Pane pane = new Pane();
         Arc[] piePieces = new Arc[NumOfPieces];
         for (int i = 0; i < piePieces.length; i++) {
@@ -45,9 +46,9 @@ public class PieceOfThePi extends Application {
         FillTransition fillTransition;
         ParallelTransition parallelTransition;
         for (int i = 0; i < transitions.length; i++) {
-            transition = new TranslateTransition(Duration.millis(500));
+            transition = new TranslateTransition(Duration.millis(duration));
             transition.setNode(piePieces[i]);
-            fillTransition = new FillTransition(Duration.millis(500));
+            fillTransition = new FillTransition(Duration.millis(duration));
             fillTransition.setShape(piePieces[i]);
             fillTransition.setToValue(Color.hsb(360 * i / NumOfPieces, 1.0, 1.0, 0.1));
             fillTransition.setFromValue(Color.hsb(360 * i / NumOfPieces, 1.0, 1.0));
