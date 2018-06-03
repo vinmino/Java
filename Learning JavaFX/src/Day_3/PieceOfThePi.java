@@ -1,9 +1,8 @@
 package Day_3;
 
-import javafx.animation.Animation;
-import javafx.animation.SequentialTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Application;
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -30,9 +29,9 @@ public class PieceOfThePi extends Application {
             piePieces[i].setType(ArcType.ROUND);
             piePieces[i].setLength(360 / NumOfPieces);
             piePieces[i].setStartAngle(360 * i / NumOfPieces);
-            piePieces[i].setStroke(Color.BLACK);
-            piePieces[i].setStrokeWidth(1);
             piePieces[i].setFill(Color.hsb(360 * i / NumOfPieces, 1.0, 1.0));
+            piePieces[i].setStroke(piePieces[i].getFill());
+            piePieces[i].setStrokeWidth(1);
             pane.getChildren().add(piePieces[i]);
         }
 
@@ -41,18 +40,28 @@ public class PieceOfThePi extends Application {
         stage.setScene(scene);
         stage.show();
 
-        TranslateTransition[] transitions = new TranslateTransition[piePieces.length];
+        ParallelTransition[] transitions = new ParallelTransition[piePieces.length];
         TranslateTransition transition;
+        FillTransition fillTransition;
+        ParallelTransition parallelTransition;
         for (int i = 0; i < transitions.length; i++) {
             transition = new TranslateTransition(Duration.millis(500));
             transition.setNode(piePieces[i]);
+            fillTransition = new FillTransition(Duration.millis(500));
+            fillTransition.setShape(piePieces[i]);
+            fillTransition.setToValue(Color.hsb(360 * i / NumOfPieces, 1.0, 1.0, 0.1));
+            fillTransition.setFromValue(Color.hsb(360 * i / NumOfPieces, 1.0, 1.0));
+            fillTransition.setAutoReverse(true);
+            fillTransition.setCycleCount(2);
             transition.setFromX(0);
             transition.setFromY(0);
             transition.setByX(50 * Math.sin((1 - Math.pow(NumOfPieces, -1)) * Math.PI + (2 * Math.PI * (i - 1) / NumOfPieces)));
             transition.setByY(50 * Math.cos((1 - Math.pow(NumOfPieces, -1)) * Math.PI + (2 * Math.PI * (i - 1) / NumOfPieces)));
             transition.setCycleCount(2);
             transition.setAutoReverse(true);
-            transitions[i] = transition;
+            parallelTransition = new ParallelTransition();
+            parallelTransition.getChildren().addAll(transition, fillTransition);
+            transitions[i] = parallelTransition;
         }
 
         SequentialTransition sequentialTransition = new SequentialTransition();
