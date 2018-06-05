@@ -1,11 +1,13 @@
 package Example;
 
+import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Duration;
 
 public class DisplayClock extends Application {
     @Override // Override the start method in the Application class
@@ -15,6 +17,9 @@ public class DisplayClock extends Application {
         String timeString = clock.getHour() + ":" + clock.getMinute()
                 + ":" + clock.getSecond();
         Label lblCurrentTime = new Label(timeString);
+        RotateTransition seconds = new RotateTransition(Duration.seconds(1));
+        RotateTransition minutes = new RotateTransition(Duration.minutes(1));
+        RotateTransition hours = new RotateTransition(Duration.hours(1));
 
         // Place clock and label in border pane
         BorderPane pane = new BorderPane();
