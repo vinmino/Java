@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
+import java.applet.Applet;
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
 

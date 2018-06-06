@@ -2,7 +2,6 @@ package Day_3;
 
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
