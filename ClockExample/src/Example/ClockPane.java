@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class ClockPane extends Pane {
@@ -81,15 +82,37 @@ public class ClockPane extends Pane {
 
         // Draw circle
         Circle circle = new Circle(centerX, centerY, clockRadius);
-        circle.setFill(Color.WHITE);
+        circle.setFill(Color.TRANSPARENT);
         circle.setStroke(Color.BLACK);
-        Text t1 = new Text(centerX - 5, centerY - clockRadius + 12, "12");
-        Text t2 = new Text(centerX - clockRadius + 3, centerY + 5, "9");
-        Text t3 = new Text(centerX + clockRadius - 10, centerY + 3, "3");
-        Text t4 = new Text(centerX - 3, centerY + clockRadius - 3, "6");
+        Text t1 = new Text(centerX - 5, centerY - clockRadius + 15, "12");
+        Text t2 = new Text(centerX - clockRadius + 6, centerY + 5, "9");
+        Text t3 = new Text(centerX + clockRadius - 12, centerY + 3, "3");
+        Text t4 = new Text(centerX - 3, centerY + clockRadius - 6, "6");
+
+        //Draw dots for the times
+        Rectangle[] points = new Rectangle[60];
+        for (int i = 0; i < points.length; i++) {
+            points[i] = new Rectangle();
+            points[i].setX(centerX + (clockRadius - 2) *
+                    Math.sin(i * (2 * Math.PI / 60)));
+            points[i].setY(centerY - (clockRadius - 2) *
+                    Math.cos(i * (2 * Math.PI / 60)));
+            if (i % 5 == 0) {
+                points[i].setWidth(1);
+                points[i].setHeight(1);
+                points[i].setFill(Color.BLACK);
+                points[i].setStroke(Color.BLACK);
+            } else {
+                points[i].setWidth(1);
+                points[i].setHeight(1);
+                points[i].setFill(Color.hsb(20, 0, 0, 0.25));
+                points[i].setStroke(Color.hsb(20, 0, 0, 0.25));
+            }
+
+        }
 
         // Draw second hand
-        double sLength = clockRadius * 0.8;
+        double sLength = clockRadius * 0.9;
         double secondX = centerX + sLength *
                 Math.sin(second * (2 * Math.PI / 60));
         double secondY = centerY - sLength *
@@ -98,7 +121,7 @@ public class ClockPane extends Pane {
         sLine.setStroke(Color.RED);
 
         // Draw minute hand
-        double mLength = clockRadius * 0.65;
+        double mLength = clockRadius * 0.75;
         double xMinute = centerX + mLength *
                 Math.sin(minute * (2 * Math.PI / 60));
         double minuteY = centerY - mLength *
@@ -107,7 +130,7 @@ public class ClockPane extends Pane {
         mLine.setStroke(Color.BLUE);
 
         // Draw hour hand
-        double hLength = clockRadius * 0.5;
+        double hLength = clockRadius * 0.6;
         double hourX = centerX + hLength *
                 Math.sin((hour % 12 + minute / 60.0) * (2 * Math.PI / 12));
         double hourY = centerY - hLength *
@@ -115,8 +138,14 @@ public class ClockPane extends Pane {
         Line hLine = new Line(centerX, centerY, hourX, hourY);
         hLine.setStroke(Color.GREEN);
 
+        Rectangle centerPoint = new Rectangle(centerX, centerY, 1, 1);
+        centerPoint.setFill(Color.BLACK);
+        centerPoint.setStroke(Color.BLACK);
+
         getChildren().clear();
-        getChildren().addAll(circle, t1, t2, t3, t4, sLine, mLine, hLine);
+        getChildren().addAll(circle, t1, t2, t3, t4, sLine, mLine, hLine, centerPoint);
+        getChildren().addAll(points);
+
     }
     @Override
     public void setWidth(double width) {
