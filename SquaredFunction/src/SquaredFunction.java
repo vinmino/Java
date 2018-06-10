@@ -28,6 +28,7 @@ public class SquaredFunction extends Application {
         Line yAxis = new Line(0, yCenter, WIDTH, yCenter);
         Label yLabel = new Label("Y");
         yLabel.translateXProperty().setValue(xCenter + 2);
+
         double[] points = new double[(int)WIDTH];
         for (double d = 0; d < WIDTH; d += 2) {
             points[(int)d] = d;
@@ -36,9 +37,7 @@ public class SquaredFunction extends Application {
 
         Polyline graph = new Polyline(points);
 
-
         root.getChildren().addAll(xAxis, yAxis, graph, xLabel, yLabel);
-
 
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
