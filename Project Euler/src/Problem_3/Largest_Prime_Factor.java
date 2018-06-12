@@ -8,7 +8,7 @@ public class Largest_Prime_Factor {
             if (num%i == 0) {
                 while( num%i == 0)
                     num = num/i;
-                System.out.println(i + "PRIME FACTOR");
+                System.out.println(i + " is a prime factor");
             }
         }
     }
