@@ -6,8 +6,8 @@ public class Largest_Prime_Factor {
         double num = 600851475143d;
         for (double i = 2; i <= num; i++) {
             if (num%i == 0) {
-                while( num%i == 0)
-                    num = num/i;
+                while( num % i == 0)
+                    num = num / i;
                 System.out.println(i + " is a prime factor");
             }
         }
