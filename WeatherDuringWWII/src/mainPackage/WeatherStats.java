@@ -1,5 +1,7 @@
 package mainPackage;
 
+import com.sun.corba.se.spi.orbutil.threadpool.Work;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -41,12 +43,28 @@ public class WeatherStats {
     }
 
     public static void main(String[] args) {
-        /*DataTable WorkingTable = new DataTable();
-        WorkingTable.printDataTable();
-        *//*System.out.println("The headers are: ");
+        DataTable WorkingTable = new DataTable();
+        //WorkingTable.printDataTable();
+        System.out.println("The headers are: ");
         for (int i = 0; i < WorkingTable.getHeaders().length; i++) {
-            System.out.println(WorkingTable.getHeaders()[i]);
-        }*/
+            System.out.print(WorkingTable.getHeaders()[i] + "\t\t\t");
+        }
+
+        String target = "";
+        double totalSnow = 0;
+        int counter = 0;
+
+        for (int i = 0; i < WorkingTable.originalCells.length; i++) {
+            try {
+                totalSnow += Double.parseDouble(WorkingTable.originalCells[i][6]);
+                counter++;
+            } catch(Exception ex) {
+                System.out.println(WorkingTable.originalCells[i][6]);
+            }
+        }
+        System.out.println("The total snow fall during the war in Europe was: " + (totalSnow / counter));
+        System.out.println(WorkingTable.getHeaders()[6]);
+
     }
 }
 
