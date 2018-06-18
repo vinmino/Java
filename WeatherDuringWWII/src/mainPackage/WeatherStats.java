@@ -51,19 +51,19 @@ public class WeatherStats {
         }
 
         String target = "";
-        double totalSnow = 0;
-        int counter = 0;
+        double totalSnow = 0, meanTemp = 0;
+        int counter = 0, counter2 = 0;
 
         for (int i = 0; i < WorkingTable.originalCells.length; i++) {
             try {
-                totalSnow += Double.parseDouble(WorkingTable.originalCells[i][6]);
+                meanTemp += Double.parseDouble(WorkingTable.originalCells[i][6]);
                 counter++;
             } catch(Exception ex) {
-                System.out.println(WorkingTable.originalCells[i][6]);
+
             }
         }
-        System.out.println("The total snow fall during the war in Europe was: " + (totalSnow / counter));
-        System.out.println(WorkingTable.getHeaders()[6]);
+        System.out.println("\nThe mean temperature during the war was: " + (meanTemp / counter) + " degrees Celsius");
+        System.out.println("or " + ((meanTemp / counter) * 9 / 5 + 32) + " degrees Fahrenheit");
 
     }
 }
