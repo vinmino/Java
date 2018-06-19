@@ -49,7 +49,7 @@ public class PixelFun extends JFrame {
         controls.setLayout(new GridLayout(3, 8));
         controls.setVisible(true);
         controls.setTitle("Controls");
-        controls.isAlwaysOnTop();
+        controls.setAlwaysOnTop(true);
 
         //This next entire section makes all the visual parts that will go into the Dialog window for the controls
         JLabel timesTableLable = new JLabel("timesTable: ");
