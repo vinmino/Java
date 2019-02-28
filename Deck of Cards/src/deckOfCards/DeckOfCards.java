@@ -4,11 +4,13 @@ public class DeckOfCards {
 
     //shuffles the deck randomly. returns a mixed up deck array
     public static int[] shuffle(int[] deck) {
-        for (int i = 0, j, temp; i < deck.length; i++) {
-            j = (int) (Math.random() * deck.length);
-            temp = deck[i];
-            deck[i] = deck[j];
-            deck[j] = temp;
+        for (int z = 0; z < 7; z++) {
+            for (int i = 0, j, temp; i < deck.length; i++) {
+                j = (int) (Math.random() * deck.length);
+                temp = deck[i];
+                deck[i] = deck[j];
+                deck[j] = temp;
+            }
         }
         return deck;
     }
